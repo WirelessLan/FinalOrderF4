@@ -4,11 +4,11 @@
 void OnF4SEMessage(F4SE::MessagingInterface::Message* msg) {
 	switch (msg->type) {
 	case F4SE::MessagingInterface::kGameLoaded:
-		for (const auto& pluginPair : Configs::g_finalOrders) {
-			if (pluginPair.second)
+		for (const auto& pluginExistsPair : Configs::g_pluginExistsMap) {
+			if (pluginExistsPair.second)
 				continue;
 
-			logger::warn("{} is not found.", pluginPair.first);
+			logger::warn("{} is not found.", pluginExistsPair.first);
 		}
 	}
 }
@@ -60,7 +60,7 @@ extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Query(const F4SE::QueryInterface * 
 
 extern "C" DLLEXPORT bool F4SEAPI F4SEPlugin_Load(const F4SE::LoadInterface * a_f4se) {
 	F4SE::Init(a_f4se);
-	F4SE::AllocTrampoline(1u << 6);
+	F4SE::AllocTrampoline(1u << 10);
 
 	Configs::LoadConfig();
 	Hooks::Install();

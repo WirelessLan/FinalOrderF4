@@ -3,18 +3,19 @@
 #include <fstream>
 
 namespace Configs {
-	std::vector<std::pair<std::string, bool>> g_finalOrders;
+	std::vector<std::string> g_finalOrderVector;
+	std::unordered_map<std::string, bool> g_pluginExistsMap;
 
 	std::string Trim(const std::string& a_str) {
 		std::string trimmed_str = a_str;
 
 		trimmed_str.erase(trimmed_str.begin(), std::find_if(trimmed_str.begin(), trimmed_str.end(), [](unsigned char ch) {
 			return !std::isspace(ch);
-			}));
+		}));
 
 		trimmed_str.erase(std::find_if(trimmed_str.rbegin(), trimmed_str.rend(), [](unsigned char ch) {
 			return !std::isspace(ch);
-			}).base(), trimmed_str.end());
+		}).base(), trimmed_str.end());
 
 		return trimmed_str;
 	}
@@ -37,7 +38,8 @@ namespace Configs {
 				continue;
 
 			logger::info ("> {}", line);
-			g_finalOrders.push_back(std::make_pair(line, false));
+			g_finalOrderVector.push_back(line);
+			g_pluginExistsMap.insert(std::make_pair(line, false));
 		}
 
 		logger::info("Config loaded...");
