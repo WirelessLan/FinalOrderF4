@@ -71,9 +71,5 @@ namespace Hooks {
 		CollectFiles = (CollectFiles_t)codeBuf;
 
 		trampoline.write_branch<5>(target.address(), CollectFiles_Hook);
-
-		//F4SE::Trampoline& trampoline = F4SE::GetTrampoline();
-		//trampoline.write_call<5>(target1.get(), CollectFiles_Hook);
-		//trampoline.write_call<5>(target2.get(), CollectFiles_Hook);
 	}
 }
